@@ -135,8 +135,8 @@ Current and planned UI direction:
 
 ### Build and run
 ```bash
-docker compose build
-docker compose up
+docker compose -f docker\docker-compose.yml build
+docker compose -f docker\docker-compose.yml up
 ```
 
 ---

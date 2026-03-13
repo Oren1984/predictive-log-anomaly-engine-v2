@@ -1,12 +1,12 @@
 # docker-compose.yml
-#
+
 # Purpose: Docker Compose configuration for the predictive-log-anomaly-engine project,
 # defining services for the API, Prometheus, and Grafana.
-#
+
 # Run from the repo root:
 #   docker compose -f docker/docker-compose.yml build
 #   docker compose -f docker/docker-compose.yml up
-#
+
 # All relative paths in this file are resolved relative to this file's
 # location (docker/).  Paths to repo-root directories use ../  prefix.
 

@@ -1,10 +1,10 @@
 # main.py
 # Project entrypoint for the Predictive Log Anomaly Engine.
-#
+
 # This file starts the FastAPI service using the existing create_app factory.
 # It delegates to the same uvicorn configuration used by
 # scripts/stage_07_run_api.py.
-#
+
 # Usage:
 #   python main.py
 #   python main.py --host 127.0.0.1 --port 8000

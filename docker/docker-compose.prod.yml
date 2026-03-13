@@ -1,18 +1,18 @@
 # docker-compose.prod.yml
-#
+
 # Production-style override for docker-compose.yml.
 # Use together with the base file — never standalone:
-#
+
 #   docker compose -f docker/docker-compose.yml \
 #                  -f docker/docker-compose.prod.yml up -d
-#
+
 # Required environment variables (set in shell or a .env file):
 #   API_KEY                   — strong random key for X-API-Key authentication
 #   GRAFANA_ADMIN_PASSWORD    — Grafana admin password (min 8 chars)
-#
+
 # Optional:
 #   GRAFANA_DOMAIN            — public hostname for Grafana (default: localhost)
-#
+
 # This file does NOT replace docker-compose.yml.
 # It overrides only the values that differ between demo and production.
 

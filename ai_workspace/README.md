@@ -10,18 +10,6 @@ The workspace is organized into modular stages that represent the system pipelin
 
 ## Directory Structure
 
-### docker
-Container definitions and runtime configuration.
-
-### logs
-Runtime log outputs generated during system execution.
-
-### monitoring
-Monitoring configuration including Prometheus and Grafana dashboards.
-
-### prompts
-AI prompts and automation instructions used during development.
-
 ### reports
 System evaluation reports and experiment outputs.
 
@@ -42,12 +30,6 @@ Model evaluation and performance analysis.
 
 ### stage_26_hdfs_supervised
 Supervised anomaly detection experiments using HDFS dataset.
-
-### system_design
-Original system architecture documentation and planning materials.
-
-### system_audit
-System validation reports including architecture review and operational readiness.
 
 ---
 

@@ -28,7 +28,13 @@ http://localhost:3000/d/stage08-api-obs/stage-08-api-observability
 
 Credentials are documented in:
 
-grafana_access.md
+## Admin
+
+User:
+admin
+
+Password:
+admin
 
 ## Data Source
 
