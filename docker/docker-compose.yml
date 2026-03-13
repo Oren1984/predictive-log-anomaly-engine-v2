@@ -1,0 +1,71 @@
+# docker-compose.yml
+
+# Purpose: Docker Compose configuration for the predictive-log-anomaly-engine project,
+# defining services for the API, Prometheus, and Grafana.
+
+# Input: Docker images, ports, environment variables, volumes, and health checks for the services.
+
+# Output: A multi-container Docker application that can be easily started and managed using Docker Compose.
+
+# Used by: Developers and operators of the predictive-log-anomaly-engine project 
+# to run the application and its monitoring stack in a containerized environment.
+
+services:
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DISABLE_AUTH: "true"
+      METRICS_ENABLED: "true"
+      MODEL_MODE: "baseline"
+      # Demo/smoke mode: small windows so alerts fire quickly without full model files.
+      # Set DEMO_MODE=false and mount real models+artifacts for production use.
+      DEMO_MODE: "true"
+      DEMO_SCORE: "100.0"
+      WINDOW_SIZE: "5"
+      STRIDE: "1"
+      ALERT_COOLDOWN_SECONDS: "0"
+      # Warmup: ingest 75 synthetic events on startup so the demo is alive immediately.
+      DEMO_WARMUP_ENABLED: "true"
+      DEMO_WARMUP_EVENTS: "75"
+    volumes:
+      # Mount local model artifacts so the container runs with real models.
+      # If these directories don't exist the mounts are silently empty.
+      - ./models:/app/models:ro
+      - ./artifacts:/app/artifacts
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Prometheus configuration
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    ports:
+      - "9090:9090"
+    volumes:
+      # Mount the full prometheus/ directory so both prometheus.yml and alerts.yml are available.
+      - ./prometheus:/etc/prometheus:ro
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.time=7d"
+    depends_on:
+      - api
+
+  # Grafana configuration
+  grafana:
+    image: grafana/grafana:10.4.2
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: "admin"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus

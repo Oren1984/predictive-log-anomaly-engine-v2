@@ -1,0 +1,93 @@
+component,metric,value,unit,time_window,evidence_source
+S01-Data-Load,elapsed_time,51.6,seconds,2026-03-03 15:16:09,ai_workspace/logs/stage_01_data_full.log (elapsed=51.6s)
+S01-Data-Load,peak_memory_rss,6652.2,MB,2026-03-03 15:16:09,ai_workspace/logs/stage_01_data_full.log (peak_mem=6652.2 MB)
+S01-Data-Load,rows_processed,15923592,rows,2026-03-03 15:16:09,ai_workspace/logs/stage_01_data_full.log (load_raw(): 15923592 rows)
+S01-Data-Load,memory_rss_start,MISSING,MB,,Not logged in stage_01 log
+S01-Data-Load,cpu_percent,MISSING,%,,No CPU profiling logged in this stage
+S03-Template-Mining,elapsed_time,9.2,seconds,2026-03-03 09:59:34,ai_workspace/logs/stage_22_template_mining.log (Total elapsed: 9.2s)
+S03-Template-Mining,peak_memory_rss,470.0,MB,2026-03-03 09:59:34,ai_workspace/logs/stage_22_template_mining.log (Peak memory: 470.0 MB)
+S03-Template-Mining,memory_rss_start,81.5,MB,2026-03-03 09:59:34,ai_workspace/logs/stage_22_template_mining.log (Memory start: 81.5 MB)
+S03-Template-Mining,rows_processed,1000000,rows,2026-03-03 09:59:34,ai_workspace/logs/stage_22_template_mining.log (Loaded 1000000 rows)
+S03-Template-Mining,unique_templates,7833,count,2026-03-03 09:59:34,ai_workspace/logs/stage_22_template_mining.log (Unique templates found: 7833)
+S03-Template-Mining,throughput,108695,rows/second,2026-03-03 09:59:34,inferred: 1000000 rows / 9.2s
+S03-Template-Mining,cpu_percent,MISSING,%,,No CPU profiling logged
+S06-Sequence-Build-V2,elapsed_time,69.6,seconds,2026-03-03 12:50:09,ai_workspace/logs/stage_23_sequence_v2.log (Total elapsed: 69.6s)
+S06-Sequence-Build-V2,peak_memory_rss,1138.2,MB,2026-03-03 12:50:09,ai_workspace/logs/stage_23_sequence_v2.log (Peak memory: 1138.2 MB)
+S06-Sequence-Build-V2,memory_rss_start,82.2,MB,2026-03-03 12:50:09,ai_workspace/logs/stage_23_sequence_v2.log (Memory start: 82.2 MB)
+S06-Sequence-Build-V2,memory_after_sequences,246.3,MB,2026-03-03 12:50:09,ai_workspace/logs/stage_23_sequence_v2.log (Memory after sequences: 246.3 MB)
+S06-Sequence-Build-V2,memory_after_features,1137.4,MB,2026-03-03 12:50:09,ai_workspace/logs/stage_23_sequence_v2.log (Memory after features: 1137.4 MB)
+S06-Sequence-Build-V2,sessions_built,495405,sessions,2026-03-03 12:50:09,ai_workspace/logs/stage_23_sequence_v2.log (Sessions built: 495405)
+S06-Sequence-Build-V2,unique_bigrams,16808,count,2026-03-03 12:50:09,ai_workspace/logs/stage_23_sequence_v2.log (Total unique bigrams (global): 16808)
+S06-Sequence-Build-V2,throughput,7117,sessions/second,2026-03-03 12:50:09,inferred: 495405 sessions / 69.6s
+S06-Sequence-Build-V2,cpu_percent,MISSING,%,,No CPU profiling logged
+S07-Baseline-Model-V1,elapsed_time,24.1,seconds,2026-03-03 12:35:00,ai_workspace/reports/system/stage_24_model_report.md (Elapsed: 24.1s)
+S07-Baseline-Model-V1,peak_memory_rss,1406.9,MB,2026-03-03 12:35:00,ai_workspace/reports/system/stage_24_model_report.md (Peak memory: 1406.9 MB)
+S07-Baseline-Model-V1,cpu_percent,MISSING,%,,No CPU profiling logged
+S08-Baseline-Model-V2,elapsed_time,26.9,seconds,2026-03-03 12:55:06,ai_workspace/logs/stage_24_baseline_model_v2.log (Total elapsed: 26.9s)
+S08-Baseline-Model-V2,peak_memory_rss,2528.5,MB,2026-03-03 12:55:06,ai_workspace/logs/stage_24_baseline_model_v2.log (Peak memory: 2528.5 MB)
+S08-Baseline-Model-V2,isoforest_fit_time,0.8,seconds,2026-03-03 12:55:06,ai_workspace/logs/stage_24_baseline_model_v2.log (Training done in 0.8s)
+S08-Baseline-Model-V2,score_range_min,0.29739,score_units,2026-03-03 12:55:06,ai_workspace/logs/stage_24_baseline_model_v2.log (Score range: [0.29739 0.44266])
+S08-Baseline-Model-V2,score_range_max,0.44266,score_units,2026-03-03 12:55:06,ai_workspace/logs/stage_24_baseline_model_v2.log (Score range: [0.29739 0.44266])
+S08-Baseline-Model-V2,score_mean,0.31899,score_units,2026-03-03 12:55:06,ai_workspace/logs/stage_24_baseline_model_v2.log (mean=0.31899)
+S08-Baseline-Model-V2,anomaly_rate,19.08,%,2026-03-03 12:55:06,ai_workspace/logs/stage_24_baseline_model_v2.log (Anomaly rate: 0.1908 (19.08%))
+S08-Baseline-Model-V2,overall_f1,0.3846,score,2026-03-03 12:55:06,ai_workspace/logs/stage_24_baseline_model_v2.log (F1=0.3846)
+S08-Baseline-Model-V2,overall_precision,0.2537,score,2026-03-03 12:55:06,ai_workspace/logs/stage_24_baseline_model_v2.log (P=0.2537)
+S08-Baseline-Model-V2,overall_recall,0.7948,score,2026-03-03 12:55:06,ai_workspace/logs/stage_24_baseline_model_v2.log (R=0.7948)
+S08-Baseline-Model-V2,bgl_f1,0.9648,score,2026-03-03 12:55:06,ai_workspace/logs/stage_24_baseline_model_v2.log ([bgl] F1=0.9648)
+S08-Baseline-Model-V2,hdfs_f1,0.0466,score,2026-03-03 12:55:06,ai_workspace/logs/stage_24_baseline_model_v2.log ([hdfs] F1=0.0466)
+S08-Baseline-Model-V2,cpu_percent,MISSING,%,,No CPU profiling logged
+S10-Evaluation-V2,elapsed_time,1.6,seconds,2026-03-03 12:57:35,ai_workspace/logs/stage_25_evaluation_v2.log (Total elapsed: 1.6s)
+S10-Evaluation-V2,overall_roc_auc,0.5632,score,2026-03-03 12:57:35,ai_workspace/logs/stage_25_evaluation_v2.log ([pred_overall] ROC=0.5632)
+S10-Evaluation-V2,overall_pr_auc,0.2127,score,2026-03-03 12:57:35,ai_workspace/logs/stage_25_evaluation_v2.log (PR=0.2127)
+S10-Evaluation-V2,bgl_roc_auc,0.6192,score,2026-03-03 12:57:35,ai_workspace/logs/stage_25_evaluation_v2.log ([bgl][pred_overall] ROC=0.6192)
+S10-Evaluation-V2,bgl_pr_auc,0.9597,score,2026-03-03 12:57:35,ai_workspace/logs/stage_25_evaluation_v2.log (PR=0.9597)
+S10-Evaluation-V2,hdfs_roc_auc,0.4918,score,2026-03-03 12:57:35,ai_workspace/logs/stage_25_evaluation_v2.log ([hdfs][pred_overall] ROC=0.4918)
+S10-Evaluation-V2,hdfs_pr_auc,0.0241,score,2026-03-03 12:57:35,ai_workspace/logs/stage_25_evaluation_v2.log (PR=0.0241)
+S12-HDFS-Supervised-V2,elapsed_time,51.4,seconds,2026-03-03 14:25:18,ai_workspace/logs/stage_26_hdfs_supervised_v2.log (Total elapsed: 51.4s)
+S12-HDFS-Supervised-V2,peak_memory_rss,3417.5,MB,2026-03-03 14:25:18,ai_workspace/logs/stage_26_hdfs_supervised_v2.log (Peak memory: 3417.5 MB)
+S12-HDFS-Supervised-V2,memory_before_filter,3047.0,MB,2026-03-03 14:25:18,ai_workspace/logs/stage_26_hdfs_supervised_v2.log (3047 MB memory baseline on this machine)
+S12-HDFS-Supervised-V2,memory_after_filter,1510.9,MB,2026-03-03 14:25:18,ai_workspace/logs/stage_26_hdfs_supervised_v2.log (HDFS sessions: 404179 Memory: 1510.9 MB)
+S12-HDFS-Supervised-V2,logreg_l2_fit_time,11.6,seconds,2026-03-03 14:25:18,ai_workspace/logs/stage_26_hdfs_supervised_v2.log ([LogReg-L2] fit=11.6s)
+S12-HDFS-Supervised-V2,hgbc_fit_time,23.3,seconds,2026-03-03 14:25:18,ai_workspace/logs/stage_26_hdfs_supervised_v2.log ([HGBC] fit=23.3s)
+S12-HDFS-Supervised-V2,logreg_val_pr_auc,0.2334,score,2026-03-03 14:25:18,ai_workspace/logs/stage_26_hdfs_supervised_v2.log (Val PR-AUC=0.2334)
+S12-HDFS-Supervised-V2,hgbc_val_pr_auc,0.1845,score,2026-03-03 14:25:18,ai_workspace/logs/stage_26_hdfs_supervised_v2.log (Val PR-AUC=0.1845)
+S12-HDFS-Supervised-V2,test_f1_best_threshold,0.252,score,2026-03-03 14:25:18,ai_workspace/logs/stage_26_hdfs_supervised_v2.log (Test F1=0.2522)
+S12-HDFS-Supervised-V2,best_f1_threshold,0.71259,probability,2026-03-03 14:25:18,ai_workspace/logs/stage_26_hdfs_supervised_v2.log (Best F1 threshold (val): 0.71259)
+S12-HDFS-Supervised-V2,cpu_percent,MISSING,%,,No CPU profiling logged
+S13-Runtime-Calibration,elapsed_time,6.04,seconds,2026-03-04 15:48:25,ai_workspace/reports/system/stage_31_runtime_calibration_report.md (Total elapsed: 6.04s)
+S13-Runtime-Calibration,windows_per_model,192,count,2026-03-04 15:48:25,ai_workspace/reports/system/stage_31_runtime_calibration_report.md
+S13-Runtime-Calibration,target_alert_rate,0.5,%,2026-03-04 15:48:25,artifacts/threshold_runtime.json
+S13-Runtime-Calibration,baseline_threshold,0.540392,score_units,2026-03-04 15:48:25,artifacts/threshold_runtime.json
+S13-Runtime-Calibration,transformer_threshold,9.195779,score_units,2026-03-04 15:48:25,artifacts/threshold_runtime.json
+S13-Runtime-Calibration,ensemble_threshold,135.831158,score_units,2026-03-04 15:48:25,artifacts/threshold_runtime.json
+S13-Runtime-Calibration,baseline_score_min,0.464332,score_units,2026-03-04 15:48:25,artifacts/threshold_runtime.json
+S13-Runtime-Calibration,baseline_score_max,0.540411,score_units,2026-03-04 15:48:25,artifacts/threshold_runtime.json
+S14-Runtime-Demo,elapsed_time,54.39,seconds,2026-03-03 19:30:32,ai_workspace/logs/stage_05_runtime_demo.log (elapsed_s: 54.39)
+S14-Runtime-Demo,events_processed,20000,events,2026-03-03 19:30:32,ai_workspace/logs/stage_05_runtime_demo.log (Loaded 20000 events)
+S14-Runtime-Demo,windows_emitted,1991,windows,2026-03-03 19:30:32,ai_workspace/logs/stage_05_runtime_demo.log (windows_emitted: 1991)
+S14-Runtime-Demo,throughput_events_per_sec_ensemble,367.7,events/second,2026-03-03 19:30:32,ai_workspace/logs/stage_05_runtime_demo.log (events_per_sec: 367.7)
+S14-Runtime-Demo,throughput_events_per_sec_baseline,743.7,events/second,2026-03-03 19:30:32,ai_workspace/reports/system/stage_05_runtime_inference_report.md
+S14-Runtime-Demo,avg_window_latency_ensemble,27.0,ms,2026-03-03 19:30:32,ai_workspace/reports/system/stage_05_runtime_inference_report.md
+S14-Runtime-Demo,avg_window_latency_baseline,13.079,ms,2026-03-03 19:30:32,ai_workspace/reports/system/stage_05_runtime_inference_report.md
+S14-Runtime-Demo,p95_window_latency_ensemble,31.3,ms,2026-03-03 19:30:32,ai_workspace/reports/system/stage_05_runtime_inference_report.md
+S14-Runtime-Demo,p95_window_latency_baseline,15.576,ms,2026-03-03 19:30:32,ai_workspace/reports/system/stage_05_runtime_inference_report.md
+S14-Runtime-Demo,peak_rss_ensemble,461.0,MB,2026-03-03 19:30:32,ai_workspace/reports/system/stage_05_runtime_inference_report.md (Peak RSS: 461 MB)
+S14-Runtime-Demo,peak_rss_baseline,428.1,MB,2026-03-03 19:30:32,ai_workspace/reports/system/stage_05_runtime_inference_report.md (Peak RSS: 428.1 MB)
+S14-Runtime-Demo,artifact_load_time_ensemble,0.18,seconds,2026-03-03 19:30:32,ai_workspace/reports/system/stage_05_runtime_inference_report.md
+S14-Runtime-Demo,artifact_load_time_baseline,0.05,seconds,2026-03-03 19:30:32,ai_workspace/reports/system/stage_05_runtime_inference_report.md
+S14-Runtime-Demo,gpu_utilization,N/A,,,"No GPU used; all CPU-based inference"
+S14-Runtime-Demo,cpu_percent,MISSING,%,,No per-stage CPU% profiling logged
+S15-API,prometheus_scrape_interval,15,seconds,continuous,prometheus/prometheus.yml (scrape_interval: 15s)
+S15-API,api_port,8000,port,continuous,docker-compose.yml
+S15-API,metrics_exposed,6,count,continuous,"src/observability/metrics.py: ingest_events_total, ingest_windows_total, alerts_total, ingest_errors_total, ingest_latency_seconds, scoring_latency_seconds"
+S15-API,api_ingest_latency_p50,MISSING,ms,,No exported Prometheus snapshot in repo; metric defined but not captured at rest
+S15-API,api_ingest_latency_p95,MISSING,ms,,No exported Prometheus snapshot in repo; metric defined but not captured at rest
+S15-API,api_scoring_latency_p50,MISSING,ms,,No exported Prometheus snapshot in repo
+S15-API,api_scoring_latency_p95,MISSING,ms,,No exported Prometheus snapshot in repo
+S15-API,alerts_total,MISSING,count,,No exported Prometheus snapshot in repo
+S16-CI-Tests,fast_suite_count,211,tests,CI run,ai_workspace/reports/system/STAGE_08_CLOSEOUT.md
+S16-CI-Tests,total_collected,233,tests,CI run,ai_workspace/reports/system/STAGE_08_CLOSEOUT.md
+S16-CI-Tests,slow_deselected,22,tests,CI run,ai_workspace/reports/system/STAGE_08_CLOSEOUT.md (pytest -m "not slow")
+S16-CI-Tests,pipeline_smoke_tests,18,tests,CI run,tests/test_pipeline_smoke.py
+S16-CI-Tests,ci_jobs,3,count,CI run,".github/workflows/ci.yml (tests + security + docker)"
+S16-CI-Tests,ci_elapsed_total,MISSING,seconds,,No CI timing exported to repo artifacts

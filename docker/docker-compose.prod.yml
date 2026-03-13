@@ -1,0 +1,50 @@
+# docker-compose.prod.yml
+
+# Production-style override for docker-compose.yml.
+# Use together with the base file — never standalone:
+
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+
+# Required environment variables (set in shell or a .env file):
+#   API_KEY                   — strong random key for X-API-Key authentication
+#   GRAFANA_ADMIN_PASSWORD    — Grafana admin password (min 8 chars)
+
+# Optional:
+#   GRAFANA_DOMAIN            — public hostname for Grafana (default: localhost)
+
+# This file does NOT replace docker-compose.yml.
+# It overrides only the values that differ between demo and production.
+
+services:
+
+  api:
+    environment:
+      # Auth — require a real API key; never run production with auth disabled.
+      DISABLE_AUTH: "false"
+      API_KEY: "${API_KEY:?API_KEY must be set for production deployment}"
+      # Model — use full ensemble; override window/stride for production load.
+      MODEL_MODE: "ensemble"
+      WINDOW_SIZE: "50"
+      STRIDE: "10"
+      # Demo mode OFF — real models must be mounted at ./models/
+      DEMO_MODE: "false"
+      DEMO_SCORE: "0.0"
+      DEMO_WARMUP_ENABLED: "false"
+      # Alert cooldown — 60 s per stream key prevents alert storms.
+      ALERT_COOLDOWN_SECONDS: "60"
+      ALERT_BUFFER_SIZE: "500"
+
+  prometheus:
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      # Retain 30 days of metrics in production.
+      - "--storage.tsdb.retention.time=30d"
+
+  grafana:
+    environment:
+      # Require a strong admin password — never use "admin" in production.
+      GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_ADMIN_PASSWORD:?GRAFANA_ADMIN_PASSWORD must be set for production deployment}"
+      GF_SERVER_DOMAIN: "${GRAFANA_DOMAIN:-localhost}"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      # Disable anonymous access in production.
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
