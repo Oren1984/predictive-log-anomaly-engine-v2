@@ -173,6 +173,102 @@ Step	      Action	               Expected Result
 
 ---
 
+## Evaluation (V1 vs V2)
+
+Compare the v1 and v2 inference pipelines on the labeled HDFS dataset.
+
+### Prerequisites
+
+All four v2 model artifacts must exist:
+
+```
+models/embeddings/word2vec.model
+models/behavior/behavior_model.pt
+models/anomaly/anomaly_detector.pt
+models/severity/severity_classifier.pt
+```
+
+Train them in order if missing:
+
+```bash
+python -m training.train_embeddings
+python -m training.train_behavior_model
+python -m training.train_autoencoder
+python -m training.train_severity_model
+```
+
+### Run evaluation
+
+```bash
+python scripts/evaluate_v2.py
+```
+
+Evaluates up to 2 000 labeled HDFS sessions (default), using a rolling
+window of 5 events for both pipelines, and writes results to
+`evaluation_report.json` in the project root.
+
+> **Note:** The default window size is 5 (not the v2 production default of 10)
+> because most HDFS blocks in the dataset have fewer than 10 events — only ~42
+> qualify with `window_size=10`, while `window_size=5` yields ~5 000 eligible
+> sessions.  Use `--window-size 10` to match production config exactly.
+
+### Options
+
+```
+--max-sessions N    Sessions to evaluate          (default: 2000)
+--window-size  N    Rolling window length          (default: 5)
+--v1-mode      STR  V1 mode: baseline|transformer|ensemble  (default: baseline)
+--output       PATH Output JSON path               (default: evaluation_report.json)
+```
+
+Examples:
+
+```bash
+# Quick run on 500 sessions
+python scripts/evaluate_v2.py --max-sessions 500
+
+# Use transformer mode for v1
+python scripts/evaluate_v2.py --v1-mode transformer
+
+# Full run, custom output path
+python scripts/evaluate_v2.py --max-sessions 5000 --output results/eval.json
+```
+
+### Output
+
+Console:
+
+```
+==============================================================
+  Phase 8 — V1 vs V2 Pipeline Evaluation
+==============================================================
+  Sessions evaluated : 2000
+  Window size        : 10
+  V1 mode            : baseline
+==============================================================
+  Metric                         V1          V2
+  ----------------------  ----------  ----------
+  Precision                   0.xxxx      0.xxxx
+  Recall                      0.xxxx      0.xxxx
+  F1 Score                    0.xxxx      0.xxxx
+  False Positive Rate         0.xxxx      0.xxxx
+  ...
+  Avg latency/call          x.xxxms     x.xxxms
+==============================================================
+```
+
+JSON report (`evaluation_report.json`):
+
+```json
+{
+  "evaluation_config": { "sessions_evaluated": 2000, "window_size": 10, ... },
+  "v1": { "precision": 0.xx, "recall": 0.xx, "f1": 0.xx, "fpr": 0.xx, "avg_latency_ms": x.xx, ... },
+  "v2": { "precision": 0.xx, "recall": 0.xx, "f1": 0.xx, "fpr": 0.xx, "avg_latency_ms": x.xx, ... }
+}
+```
+
+---
+
 ## Testing
 Fast test suite
 ```bash

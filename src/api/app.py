@@ -31,6 +31,7 @@ from ..observability.metrics import MetricsMiddleware, MetricsRegistry
 from ..security.auth import AuthMiddleware
 from .pipeline import Pipeline
 from .routes import router
+from .routes_v2 import router_v2
 from .settings import Settings
 from .ui import ui_router
 
@@ -81,6 +82,28 @@ async def _lifespan(app: FastAPI):
     except Exception as exc:
         logger.error("API startup: pipeline load failed: %s", exc)
         # Continue anyway so /health can report unhealthy
+
+    # ------------------------------------------------------------------
+    # v2 engine — loaded when MODEL_MODE contains "v2" (e.g. "v2" or "both")
+    # ------------------------------------------------------------------
+    app.state.engine_v2 = None
+    if "v2" in cfg.model_mode.lower():
+        logger.info("API startup: MODEL_MODE=%r — loading v2 pipeline ...", cfg.model_mode)
+        try:
+            from ..runtime.inference_engine_v2 import InferenceEngineV2
+            from ..runtime.pipeline_v2 import V2PipelineConfig
+            v2_cfg = V2PipelineConfig(window_size=cfg.window_size)
+            engine_v2 = InferenceEngineV2(
+                cfg=v2_cfg,
+                alert_buffer_size=cfg.alert_buffer_size,
+                alert_cooldown_seconds=cfg.alert_cooldown_seconds,
+            )
+            engine_v2.load_models()
+            app.state.engine_v2 = engine_v2
+            logger.info("API startup: v2 pipeline ready")
+        except Exception as exc:
+            logger.error("API startup: v2 pipeline load failed: %s", exc)
+            # Continue — /v2/ingest will return 503 until models are trained
 
     warmup = None
     if cfg.demo_warmup_enabled:
@@ -170,6 +193,7 @@ def create_app(
     # Routes
     # ------------------------------------------------------------------
     app.include_router(router)
+    app.include_router(router_v2)
     app.include_router(ui_router)
 
     return app

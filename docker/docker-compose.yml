@@ -1,40 +1,49 @@
 # docker-compose.yml
-
+#
 # Purpose: Docker Compose configuration for the predictive-log-anomaly-engine project,
 # defining services for the API, Prometheus, and Grafana.
-
-# Input: Docker images, ports, environment variables, volumes, and health checks for the services.
-
-# Output: A multi-container Docker application that can be easily started and managed using Docker Compose.
-
-# Used by: Developers and operators of the predictive-log-anomaly-engine project 
-# to run the application and its monitoring stack in a containerized environment.
+#
+# Run from the repo root:
+#   docker compose -f docker/docker-compose.yml build
+#   docker compose -f docker/docker-compose.yml up
+#
+# All relative paths in this file are resolved relative to this file's
+# location (docker/).  Paths to repo-root directories use ../  prefix.
 
 services:
 
   api:
-    build: .
+    build:
+      # Build context = repo root so Dockerfile can COPY src/, scripts/, templates/
+      context: ..
+      dockerfile: docker/Dockerfile
     ports:
       - "8000:8000"
     environment:
       DISABLE_AUTH: "true"
       METRICS_ENABLED: "true"
+      # Demo/smoke mode (v1 baseline): synthetic scores so alerts fire without
+      # trained model files.  Override MODEL_MODE=v2 to exercise the v2 pipeline.
       MODEL_MODE: "baseline"
-      # Demo/smoke mode: small windows so alerts fire quickly without full model files.
-      # Set DEMO_MODE=false and mount real models+artifacts for production use.
       DEMO_MODE: "true"
       DEMO_SCORE: "100.0"
-      WINDOW_SIZE: "5"
+      # WINDOW_SIZE: v1 default is 50; v2 model was trained at 10.
+      # Set to 10 when MODEL_MODE=v2 to avoid a silent mismatch.
+      WINDOW_SIZE: "10"
       STRIDE: "1"
       ALERT_COOLDOWN_SECONDS: "0"
       # Warmup: ingest 75 synthetic events on startup so the demo is alive immediately.
       DEMO_WARMUP_ENABLED: "true"
       DEMO_WARMUP_EVENTS: "75"
     volumes:
-      # Mount local model artifacts so the container runs with real models.
-      # If these directories don't exist the mounts are silently empty.
-      - ./models:/app/models:ro
-      - ./artifacts:/app/artifacts
+      # All paths below are relative to this file's directory (docker/).
+      # "../" ascends to the repo root where the real directories live.
+      - ../models:/app/models:ro
+      - ../artifacts:/app/artifacts:ro
+      # v2 pipeline requires templates.csv at /app/data/intermediate/templates.csv.
+      # data/intermediate/ is excluded from the Docker image by .dockerignore,
+      # so we inject it here as a read-only volume.
+      - ../data/intermediate:/app/data/intermediate:ro
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 15s
@@ -49,7 +58,7 @@ services:
       - "9090:9090"
     volumes:
       # Mount the full prometheus/ directory so both prometheus.yml and alerts.yml are available.
-      - ./prometheus:/etc/prometheus:ro
+      - ../prometheus:/etc/prometheus:ro
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.retention.time=7d"
@@ -65,7 +74,7 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: "admin"
       GF_USERS_ALLOW_SIGN_UP: "false"
     volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning:ro
-      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - ../grafana/provisioning:/etc/grafana/provisioning:ro
+      - ../grafana/dashboards:/var/lib/grafana/dashboards:ro
     depends_on:
       - prometheus

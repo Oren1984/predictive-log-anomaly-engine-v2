@@ -21,16 +21,24 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies first (layer cache)
-COPY requirements.txt .
+# requirements.txt lives under requirements/ in the repo root.
+COPY requirements/requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application source
+# Copy application source (build context must be repo root — see docker-compose.yml)
 COPY src/ src/
 COPY scripts/ scripts/
+# templates/ holds the FastAPI HTML/Jinja2 UI templates served by the API.
 COPY templates/ templates/
 
+# Copy the template vocabulary needed by the v2 _V2LogTokenizer at runtime.
+# data/intermediate/ is excluded from the Docker build context by .dockerignore,
+# so templates.csv is injected via a read-only volume mount instead.
+# This RUN just ensures the target directory exists so the mount succeeds.
+RUN mkdir -p data/intermediate
+
 # Create empty model/artifact dirs; they are populated via volume mounts
-# in docker-compose.yml (./models and ./artifacts).  This means the image
+# in docker-compose.yml (../models and ../artifacts).  This means the image
 # builds successfully in CI even when those gitignored directories are absent.
 RUN mkdir -p models artifacts
 
