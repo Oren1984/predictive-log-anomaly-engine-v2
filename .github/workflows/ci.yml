@@ -90,10 +90,10 @@ jobs:
         run: mkdir -p models artifacts
 
       - name: Build API image
-        run: docker build -t anomaly-api:ci .
+        run: docker build -f docker/Dockerfile -t anomaly-api:ci .
 
       - name: Start compose stack
-        run: docker compose up -d --build
+        run: docker compose -f docker/docker-compose.yml up -d --build
 
       - name: Wait for /health (up to 90s)
         run: |
@@ -108,7 +108,7 @@ jobs:
             sleep 5
           done
           echo "ERROR: API did not respond within 90 seconds"
-          docker compose logs api
+          docker compose -f docker/docker-compose.yml logs api
           exit 1
 
       - name: Smoke test /health
