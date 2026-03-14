@@ -7,9 +7,6 @@ on:
     branches: ["main"]
 
 jobs:
-  # -------------------------------------------------------------------------
-  # A) Lint + tests
-  # -------------------------------------------------------------------------
   tests:
     name: Lint + Tests (Python 3.11)
     runs-on: ubuntu-latest
@@ -40,9 +37,6 @@ jobs:
       - name: Run pytest (fast suite — skip slow model-dependent tests)
         run: python -m pytest --tb=short -q -m "not slow"
 
-  # -------------------------------------------------------------------------
-  # B) Security scan
-  # -------------------------------------------------------------------------
   security:
     name: Security Scan
     runs-on: ubuntu-latest
@@ -72,9 +66,6 @@ jobs:
           exit-code: "0"
           format: "table"
 
-  # -------------------------------------------------------------------------
-  # C) Docker build + smoke test
-  # -------------------------------------------------------------------------
   docker:
     name: Docker Build + Smoke Test
     runs-on: ubuntu-latest
@@ -83,9 +74,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Must create these dirs BEFORE docker build so the image layer cache
-      # for RUN mkdir -p models artifacts is primed (gitignored dirs won't exist
-      # in a fresh checkout, but the Dockerfile no longer COPYs them anyway).
       - name: Prepare empty model directories for CI
         run: mkdir -p models artifacts
 
@@ -125,15 +113,23 @@ jobs:
 
       - name: Smoke test ingest -> alert
         run: |
-          echo "Posting 10 events to /ingest (DEMO_MODE; WINDOW_SIZE=5, STRIDE=1)..."
+          echo "Posting 10 events to /ingest (DEMO_MODE; WINDOW_SIZE=10, STRIDE=1)..."
           for i in $(seq 1 10); do
-            R=$(curl -s -o /dev/null -w "%{http_code}" \
-                -X POST http://localhost:8000/ingest \
-                -H "Content-Type: application/json" \
-                -d '{"service":"ci-smoke","token_id":1}')
+            R=$(curl -s -o /tmp/ingest_resp.txt -w "%{http_code}" \
+              -X POST http://localhost:8000/ingest \
+              -H "Content-Type: application/json" \
+              -d '{"service":"ci-smoke","token_id":1}')
             echo "  event $i -> HTTP $R"
-            test "$R" = "200"
+            if [ "$R" != "200" ]; then
+              echo "Ingest response body:"
+              cat /tmp/ingest_resp.txt
+              echo ""
+              echo "API logs:"
+              docker compose -f docker/docker-compose.yml logs api
+              exit 1
+            fi
           done
+
           echo "Checking /alerts..."
           ALERTS=$(curl -sf http://localhost:8000/alerts)
           echo "  $ALERTS"
@@ -150,8 +146,8 @@ jobs:
       - name: Smoke test /query (RAG stub)
         run: |
           RESP=$(curl -sf -X POST http://localhost:8000/query \
-                 -H "Content-Type: application/json" \
-                 -d '{"question":"How do alerts work?"}')
+            -H "Content-Type: application/json" \
+            -d '{"question":"How do alerts work?"}')
           echo "$RESP"
           echo "$RESP" | python3 -c "
           import sys, json
@@ -163,4 +159,4 @@ jobs:
 
       - name: Tear down
         if: always()
-        run: docker compose down -v
+        run: docker compose -f docker/docker-compose.yml down -v
