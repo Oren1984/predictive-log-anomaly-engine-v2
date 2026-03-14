@@ -1,298 +1,275 @@
-﻿# Predictive Log Anomaly Engine
+﻿## Predictive Log Anomaly Engine
 
 AI-powered observability and anomaly detection system for software logs.
 
-This project detects risky behavioral patterns in log streams **before full service failure occurs**.  
+The Predictive Log Anomaly Engine analyzes behavioral patterns in log streams and detects abnormal activity before full service failure occurs.
+
 Instead of reacting only after incidents happen, the engine analyzes event sequences in real time, scores anomalous behavior, generates alerts, and exposes a complete observability stack for investigation.
+
+---
 
 ## Tech Stack
 
-Python • FastAPI • Docker • Prometheus • Grafana • Pytest • GitHub Actions
+Python • FastAPI • Docker • Prometheus • Grafana • PyTorch • Pytest • GitHub Actions
 
 ---
 
 ## Overview
 
-Traditional monitoring systems usually detect failures **after** they already impact the system, for example through CPU spikes, crashes, or error bursts.
+Traditional monitoring systems usually detect failures after they already impact the system, for example through CPU spikes, crashes, or error bursts.
 
-The **Predictive Log Anomaly Engine** takes a more proactive approach:
+The Predictive Log Anomaly Engine takes a more proactive approach by analyzing log behavior patterns rather than simple metrics.
 
-- parses and normalizes raw logs
-- extracts behavioral templates
-- builds event sequences
-- applies AI-based anomaly scoring
-- generates severity-based alerts
-- exposes runtime metrics and dashboards for investigation
+The system:
 
-The result is a full AI runtime pipeline combined with an observability and alerting layer.
+1. parses and normalizes raw logs
+
+2. extracts behavioral templates
+
+3. builds event sequences
+
+4. generates semantic embeddings
+
+5. applies AI-based anomaly detection
+
+6. classifies severity levels
+
+7. generates alerts and exposes observability dashboards
+
+The result is a full AI runtime pipeline combined with an observability and investigation layer.
 
 ---
 
 ## Key Capabilities
 
-- Real-time log anomaly detection using sequence-based analysis
-- Runtime inference pipeline for streaming event ingestion
-- Severity scoring and alert generation
-- FastAPI service with built-in investigation UI
-- Prometheus metrics and Grafana dashboards
-- Docker-based local deployment
-- CI/CD validation with automated tests
+1. Real-time log anomaly detection using behavioral    
+   sequence analysis
+
+2. Multi-stage AI inference pipeline
+
+3. Severity scoring and alert generation
+
+4. FastAPI service exposing ingestion and investigation  
+   endpoints
+
+5. Prometheus metrics and Grafana dashboards
+
+6. Docker-based deployment
+
+7. CI/CD validation with automated tests
+
+8. Interactive demonstration notebooks
 
 ---
 
 ## System Architecture
 
-The system follows a full runtime pipeline:
+The system follows a full AI runtime pipeline:
 
-```text
-Logs
-  ↓
-Parsing & Template Mining
-  ↓
-Sequence Builder
-  ↓
-ML Scoring Engine
-  ↓
-Alert Manager
-  ↓
-FastAPI Service
-  ↓
-Prometheus + Grafana
-  ↓
-Investigation UI
+          Logs
+            ↓
+    Parsing & Template Mining
+            ↓
+      Sequence Builder
+            ↓
+    Embedding Generation (Word2Vec)
+            ↓
+      Behavior Modeling
+            ↓
+    Autoencoder Anomaly Detection
+            ↓
+      Severity Classification
+            ↓
+        Alert Manager
+            ↓
+      FastAPI Service
+            ↓
+      Prometheus + Grafana
+            ↓
+      Investigation UI
 
-```
+---
 
 ## Main Components
-1. Parsing & Template Mining:
+1. Parsing & Template Mining
 
-   Transforms raw logs into structured templates that reduce noise and preserve behavioral patterns.
+  Transforms raw logs into structured templates that reduce noise while preserving behavioral patterns.
 
-2. Sequence Builder:
+2. Sequence Builder
 
-   Builds event windows and sequences that represent operational behavior over time.
+  Builds event windows and behavioral sequences that represent operational system activity.
 
-3. ML Scoring Engine:
+3. Embedding Engine
 
-   Applies anomaly detection logic to detect suspicious or unusual behavior patterns.
+  Uses Word2Vec embeddings to convert log templates into semantic vector representations.
 
-4. Alert Manager:
+4. Behavior Model
 
-   Generates alerts with severity levels, cooldown handling, and alert lifecycle logic.
+  Learns normal operational sequences using a deep learning behavioral model.
 
-5. API Service:
+5. Autoencoder Anomaly Detector
 
-   Exposes ingestion, health, alerts, metrics, and UI-related endpoints through FastAPI.
+  Detects abnormal patterns by measuring reconstruction error from learned normal behavior.
 
-6. Observability Layer:
+6. Severity Classifier
 
-   Integrates Prometheus metrics, Grafana dashboards, and health visibility for runtime monitoring.
+  Assigns severity levels to detected anomalies based on learned patterns and rule-based signals.
 
-7. Investigation UI:
+7. Alert Manager
 
-   Provides a lightweight read-only interface for reviewing alerts, system state, and future investigation workflows.
+  Generates alerts with severity levels and handles alert lifecycle management.
+
+8. FastAPI Runtime Service
+
+  Provides:
+
+  - ingestion endpoints
+
+  - system health signals
+
+  - alert queries
+
+  - investigation endpoints
+
+  - UI serving
+
+9. Observability Layer
+
+The project integrates a full observability stack:
+
+  - Prometheus metrics collection
+
+  - Grafana dashboards
+
+  - system health visibility
+
+  - ingestion monitoring
+
+  - alert activity monitoring
 
 ---
 
-## Included Observability Features
+## Demo Notebooks
 
-The project includes an operational observability stack with:
+The repository includes interactive demonstration notebooks.
 
-1. Prometheus metrics collection
+These notebooks serve as the primary explanation and visualization layer of the system.
 
-2. Grafana dashboard provisioning
+notebooks/
+predictive_log_anomaly_engine_demo.ipynb
+predictive_log_anomaly_engine_gpu_demo.ipynb
 
-3. System health visibility
+The notebooks demonstrate:
 
-4. Ingest error visibility
+- log ingestion simulation
 
-5. Alert-oriented monitoring rules
+- anomaly scoring visualization
 
-6. Production-style compose override (docker-compose.prod.yml)
+- dynamic graphs of detection behavior
+
+- GPU acceleration demonstration
 
 ---
 
-## Demo UI
+## Demo Scripts
 
-The project includes a minimal UI served directly by FastAPI.
+The repository also includes runnable demo scripts:
 
-The UI is intentionally lightweight and read-only.
-Its role is to support observability and investigation, not backend reconfiguration.
+demo/
+predictive_log_anomaly_engine_demo.py
+predictive_log_anomaly_engine_gpu_demo.py
 
-Current and planned UI direction:
-
-1. alert review
-
-2. anomaly investigation
-
-3. health inspection
-
-4. future RAG-style investigation assistance
+These scripts generate synthetic events and visualize anomaly detection behavior.
 
 ---
 
 ## Quick Start
 
-### Build and run
-```bash
+Build and run the system:
+
 docker compose -f docker\docker-compose.yml build
 docker compose -f docker\docker-compose.yml up
-```
 
 ---
 
-## Open the services
-- API / UI: http://localhost:8000
+## Open the Services
 
-- Prometheus: http://localhost:9090
+- API / UI
+http://localhost:8000
 
-- Grafana: http://localhost:3000
+- Prometheus
+http://localhost:9090
+
+- Grafana
+http://localhost:3000
 
 ---
 
 ## Demo Walkthrough
-Step	      Action	               Expected Result
-1	         Ingest events	         Synthetic logs enter the runtime pipeline
-2	         Open alerts view	      Alerts appear with severity and score
-3	         Open dashboard	         Prometheus / Grafana show runtime activity
-4	         Query the system	      Investigation-oriented answer is returned
-
----
-
-## Example Questions
-
-1. How does the alert threshold work?
-
-2. What model is used for anomaly detection?
-
-3. What dataset is used for training?
-
-4. How does the health signal work?
-
-5. How do I run the system with Docker?
+Step	Action	Expected Result
+1	Ingest events	Synthetic logs enter the runtime pipeline
+2	Open alerts view	Alerts appear with severity and score
+3	Open dashboards	Prometheus / Grafana show runtime metrics
+4	Query investigation	System returns investigation information
 
 ---
 
 ## Evaluation (V1 vs V2)
 
-Compare the v1 and v2 inference pipelines on the labeled HDFS dataset.
+The repository includes evaluation tooling for comparing the V1 and V2 anomaly pipelines.
 
 ### Prerequisites
 
-All four v2 model artifacts must exist:
+All four model artifacts must exist:
 
-```
 models/embeddings/word2vec.model
 models/behavior/behavior_model.pt
 models/anomaly/anomaly_detector.pt
 models/severity/severity_classifier.pt
-```
 
-Train them in order if missing:
+Train them if missing:
 
-```bash
 python -m training.train_embeddings
 python -m training.train_behavior_model
 python -m training.train_autoencoder
 python -m training.train_severity_model
-```
 
-### Run evaluation
-
-```bash
+### Run Evaluation
 python scripts/evaluate_v2.py
-```
 
-Evaluates up to 2 000 labeled HDFS sessions (default), using a rolling
-window of 5 events for both pipelines, and writes results to
-`evaluation_report.json` in the project root.
+Evaluates labeled HDFS sessions and generates performance comparison.
 
-> **Note:** The default window size is 5 (not the v2 production default of 10)
-> because most HDFS blocks in the dataset have fewer than 10 events — only ~42
-> qualify with `window_size=10`, while `window_size=5` yields ~5 000 eligible
-> sessions.  Use `--window-size 10` to match production config exactly.
+Output is written to:
 
-### Options
-
-```
---max-sessions N    Sessions to evaluate          (default: 2000)
---window-size  N    Rolling window length          (default: 5)
---v1-mode      STR  V1 mode: baseline|transformer|ensemble  (default: baseline)
---output       PATH Output JSON path               (default: evaluation_report.json)
-```
-
-Examples:
-
-```bash
-# Quick run on 500 sessions
-python scripts/evaluate_v2.py --max-sessions 500
-
-# Use transformer mode for v1
-python scripts/evaluate_v2.py --v1-mode transformer
-
-# Full run, custom output path
-python scripts/evaluate_v2.py --max-sessions 5000 --output results/eval.json
-```
-
-### Output
-
-Console:
-
-```
-==============================================================
-  Phase 8 — V1 vs V2 Pipeline Evaluation
-==============================================================
-  Sessions evaluated : 2000
-  Window size        : 10
-  V1 mode            : baseline
-==============================================================
-  Metric                         V1          V2
-  ----------------------  ----------  ----------
-  Precision                   0.xxxx      0.xxxx
-  Recall                      0.xxxx      0.xxxx
-  F1 Score                    0.xxxx      0.xxxx
-  False Positive Rate         0.xxxx      0.xxxx
-  ...
-  Avg latency/call          x.xxxms     x.xxxms
-==============================================================
-```
-
-JSON report (`evaluation_report.json`):
-
-```json
-{
-  "evaluation_config": { "sessions_evaluated": 2000, "window_size": 10, ... },
-  "v1": { "precision": 0.xx, "recall": 0.xx, "f1": 0.xx, "fpr": 0.xx, "avg_latency_ms": x.xx, ... },
-  "v2": { "precision": 0.xx, "recall": 0.xx, "f1": 0.xx, "fpr": 0.xx, "avg_latency_ms": x.xx, ... }
-}
-```
+evaluation_report.json
 
 ---
 
 ## Testing
-Fast test suite
-```bash
+
+Fast tests
+
 pytest -m "not slow"
-```
 
 Integration tests
-```bash
+
 pytest -m integration
-```
 
 ---
 
 ## Documentation Structure
 
-Additional project documentation is organized under docs/:
+Additional documentation is available under:
 
-1. docs/current_system/ — current architecture, roadmap, UI direction
+docs/
 
-2. docs/api/ — API reference
+1. docs/current_system — architecture and roadmap
 
-3. docs/operations/ — alerts, deployment, metrics, security
+2. docs/api — API reference
 
-4. docs/system_validation/ — audit and validation reports
+3. docs/operations — deployment, alerts, metrics
+
+4. docs/system_validation — validation reports
 
 ---
 
@@ -300,15 +277,17 @@ Additional project documentation is organized under docs/:
 
 Developed as part of an Applied AI Engineering project.
 
-- **Oren Salami** — DevOps, QA, Core Architecture Design, Technical Specification
+- Oren Salami
+  DevOps, QA, Architecture Design, Technical Specification
 
-- **Dan Kalfon** — Backend Engineering, Core Architecture Design, Technical Specification
+- Dan Kalfon
+  Backend Engineering, Architecture Design, Technical Specification
 
-- **Nahshon Raizman** — Frontend Development and UI , Core Architecture Design, Technical
-                        Specification
+- Nahshon Raizman
+  Frontend Development, UI Design, Architecture Design, Technical Specification
 
-- **Jonathan Finkelstein** — Frontend Development and UI , Core Architecture Design, Technical
-                             Specification
+- Jonathan Finkelstein
+  Frontend Development, UI Design, Architecture Design, Technical Specification
 
 ---
 
@@ -318,21 +297,21 @@ Current repository status:
 
 1. runtime inference pipeline implemented
 
-2. alert pipeline implemented
+2. anomaly detection models integrated
 
-3. observability stack integrated
+3. alert pipeline implemented
 
-4. Grafana and Prometheus configured
+4. observability stack integrated
 
-5. production-style deployment override added
+5. Grafana and Prometheus configured
 
-6. validation and tests passing
+6. Docker deployment implemented
 
-7. UI implemented for alert review and investigation workflows
+7. evaluation framework implemented
+
+8. investigation UI implemented
 
 All tests passing (578 tests) and full containerized runtime included.
-
-This repository represents a complete AI engineering prototype with strong emphasis on runtime behavior, observability, and investigation workflows.
 
 ---
 
@@ -342,7 +321,7 @@ This project demonstrates practical work across:
 
 1. AI runtime systems
 
-2. anomaly detection workflows
+2. anomaly detection pipelines
 
 3. FastAPI backend engineering
 
@@ -354,7 +333,4 @@ This project demonstrates practical work across:
 
 7. investigation-oriented system design
 
-
 Built as part of an Applied AI Engineering project.
-
---- 
