@@ -39,7 +39,7 @@ services:
       # All paths below are relative to this file's directory (docker/).
       # "../" ascends to the repo root where the real directories live.
       - ../models:/app/models:ro
-      - ../artifacts:/app/artifacts:ro
+      - ../artifacts:/app/artifacts
       # v2 pipeline requires templates.csv at /app/data/intermediate/templates.csv.
       # data/intermediate/ is excluded from the Docker image by .dockerignore,
       # so we inject it here as a read-only volume.
