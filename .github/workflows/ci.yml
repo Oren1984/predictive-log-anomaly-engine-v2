@@ -1,3 +1,6 @@
+# .github/workflows/ci.yml
+# CI workflow for anomaly-api
+
 name: CI
 
 on:

@@ -1,4 +1,4 @@
-﻿# Predictive Log Anomaly Engine
+﻿# Predictive Log Anomaly Engine v2
 
 AI-powered observability and anomaly detection system for software logs.
 
